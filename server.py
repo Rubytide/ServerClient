@@ -1,29 +1,31 @@
 import socket
 
-def client():
-    host = '0.0.0.0'  #Mesma coisa que o server.py,
-    port = 18000         #Porta 1000 não funcionava
+def server():
+    host = '127.0.0.1'
+    port = 5000  #Porta 1000 não estava a funcionar localmente,
+                 #Corri o código com $ sudo python3 server.py/client.py
+    server_socket = socket.socket()
+    server_socket.bind((host, port))
+    print(f"Server started, listening on {host}:{port}") #Debugs de testes
 
-    client_socket = socket.socket()
-    print(f"Attempting to connect to server at {host}:{port}") #Debugs de teste
-    client_socket.connect((host, port))
-    print(f"Connected to server at {host}:{port}") #Debugs de teste, conexão successful
+    server_socket.listen(1)
+    conn, address = server_socket.accept()
+    print(f"Connection accepted from {address}") #Mais debugs, conexão successful aqui
 
     while True:
-        #Mandar mensagem para o server
-        message = input("Enter message for server -> ")
-        #if message.lower() == 'bye':
-        #    print("Closing connection.")
-        #    break
+        #"Ouvir" o cliente
+        data = conn.recv(1024).decode()
+    #    if not data:
+    #        print("No data received. Closing connection.")
+    #        break
 
-        client_socket.send(message.encode())  
-        print(f"Sent to server: {message}")
+        print(f"Received from client: {data}")
 
-        #Receber resposta do servidor
-        data = client_socket.recv(1024).decode()
-        print(f"Received from server: {data}")
+        #Responder ao cliente
+        data = input('Enter response to client -> ')
+        conn.send(data.encode())
 
-    client_socket.close()
+    conn.close()
 
 if __name__ == '__main__':
-    client()
+    server()
