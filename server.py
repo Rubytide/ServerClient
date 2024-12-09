@@ -1,8 +1,8 @@
 import socket
 
 def server():
-    host = '127.0.0.1'
-    port = 5000  #Porta 1000 não estava a funcionar localmente,
+    host = '0.0.0.0'
+    port = 18000  #Porta 1000 não estava a funcionar localmente,
                  #Corri o código com $ sudo python3 server.py/client.py
     server_socket = socket.socket()
     server_socket.bind((host, port))
