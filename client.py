@@ -16,8 +16,8 @@ def client():
         #    print("Closing connection.")
         #    break
 
-        client_socket.send(message.encode())  
-        print(f"Sent to server: {message}")
+        #client_socket.send(message.encode())  
+        #print(f"Sent to server: {message}")
 
         #Receber resposta do servidor
         data = client_socket.recv(1024).decode()
